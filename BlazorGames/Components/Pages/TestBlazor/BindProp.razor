@@ -1,0 +1,20 @@
+﻿@page "/testblazor/bindprop"
+
+<h3>Product - Data Binding</h3>
+
+Name : @Product.Name <br/>
+IsAvailable : @Product.IsAvailable  <br/>
+Price: @Product.Price <br />
+This Product Is: @(Product.IsAvailable ? "Active" : "Inactive") <br />
+IsActive : <input type="checkbox" @bind="@Product.IsAvailable" /> <br />
+Input Price: <input type="number" @bind="@Product.Price" @bind:event="oninput"/>
+
+@code {
+    Models.Product Product = new()
+    {
+        Id = 1,
+        Name = "Product 1",
+        IsAvailable = true,
+        Price = 5.00
+    };
+}
