@@ -1,20 +1,51 @@
 ﻿@page "/testblazor/bindprop"
 
-<h3>Product - Data Binding</h3>
+<div class="row">
+    <div class="col-6 border p-3">
+        IsActive : <input type="checkbox" @bind="@Product.IsAvailable" /> <br />
+        Input Price: <input type="number" @bind="@Product.Price" @bind:event="oninput" />
+        <br />
+        <br />
+        Product Properties
+        <select @bind="selectedProp">
+            @foreach (var prop in Product.ProductProperties)
+            {
+                <option value="@prop.Key">@prop.Key</option>
+            }
+        </select>
+    </div>
+    <div class="col-6 border p-3">
+        <h3>Product - Data Binding</h3>
+        Name : @Product.Name <br />
+        IsAvailable : @Product.IsAvailable  <br />
+        Price: @Product.Price <br />
+        This Product Is: @(Product.IsAvailable ? "Active" : "Inactive") <br />
 
-Name : @Product.Name <br/>
-IsAvailable : @Product.IsAvailable  <br/>
-Price: @Product.Price <br />
-This Product Is: @(Product.IsAvailable ? "Active" : "Inactive") <br />
-IsActive : <input type="checkbox" @bind="@Product.IsAvailable" /> <br />
-Input Price: <input type="number" @bind="@Product.Price" @bind:event="oninput"/>
+        <br />
+        Property Selected: @selectedProp
+        @if (!string.IsNullOrEmpty(selectedProp))
+        {
+            <p>Selected Value : @Product.ProductProperties.FirstOrDefault(u => u.Key == selectedProp).Value</p>
+        }
+    </div>
+</div>
+
+
 
 @code {
-    Models.Product Product = new()
+    private string selectedProp = "";
+
+    Product Product = new()
     {
         Id = 1,
         Name = "Product 1",
         IsAvailable = true,
-        Price = 5.00
+        Price = 5.00,
+        ProductProperties = new List<Product_Prop>()
+        {
+            new Product_Prop { Id = 1, Key = "Colour", Value = "Red"},
+            new Product_Prop { Id = 2, Key = "Size", Value = "20oz"},
+            new Product_Prop { Id = 3, Key = "Flavour", Value = "Rose"},
+        }
     };
 }
