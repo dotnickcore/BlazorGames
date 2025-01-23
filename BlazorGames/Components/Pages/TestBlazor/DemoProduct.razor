@@ -4,21 +4,11 @@
 
 <div class="border p-2 mt-2">
     <div class="row">
-        @foreach(var prod in ProductList){
-            <div class="bg-light border col-6">
-                <h4 class="text-secondary">Product - @prod.Id</h4>
-                Name - @prod.Name
-                Show Properties :
-                <input type="checkbox" @bind="prod.IsAvailable" />
+        @foreach(var prod in ProductList)
+        {
+            <_IndividualProductComponent Product="prod">
 
-                @if (prod.IsAvailable) {
-                    @foreach(var prodProp in prod.ProductProperties){
-                        <p>@prodProp.Key - @prodProp.Value</p>
-                    }
-                }
-                <br />
-                <input type="button" class="btn btn-danger" style="width:100px" value="Delete" @onclick="()=>RemoveProduct(prod.Id)"/>
-            </div>
+            </_IndividualProductComponent>
         }
     </div>
     <div class="row pt-4">
@@ -66,7 +56,8 @@
         Count+=counter;
     }
 
-    private void RemoveProduct(int productId) {
+    private void RemoveProduct(int productId)
+    {
         var prod = ProductList.FirstOrDefault(u => u.Id == productId);
         if (prod != null) ProductList.Remove(prod);
     }
