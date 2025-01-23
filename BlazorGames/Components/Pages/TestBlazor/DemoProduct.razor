@@ -1,12 +1,12 @@
 ﻿@page "/testblazor/demoproduct"
 
 <h2 class="text-primary">DemoProduct</h2>
-
+<p>Favourite Count : @FavouriteCount</p>
 <div class="border p-2 mt-2">
     <div class="row">
         @foreach(var prod in ProductList)
         {
-            <_IndividualProductComponent Product="prod">
+            <_IndividualProductComponent Product="prod" OnFavouriteUpdated="FavouriteCountChange">
 
             </_IndividualProductComponent>
         }
@@ -20,6 +20,8 @@
 
 @code {
     public int Count { get; set; } = 0;
+
+    public int FavouriteCount { get; set; } = 0;
 
     List<Product> ProductList = new();
 
@@ -50,6 +52,15 @@
                 new Product_Prop {Id = 3,Key = "Color",Value = "White"}
             }
             });
+    }
+
+    protected void FavouriteCountChange(bool isSelected){
+        if (isSelected) {
+            FavouriteCount++;
+        }
+        else {
+            FavouriteCount--;
+        }
     }
 
     private void IncrementCount(int counter){
